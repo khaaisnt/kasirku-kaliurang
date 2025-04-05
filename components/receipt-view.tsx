@@ -57,7 +57,7 @@ export function ReceiptView({ order }: ReceiptViewProps) {
         </div>
       </div>
 
-      <div className="border-t border-dashed border-gray-300 mt-2 pt-2 text-center">
+      <div className="border-t border-dashed border-gray-300 mt-2 pb-14 pt-2 text-center">
         <p>Terimakasih - Selamat Menikmati</p>
         <p>{new Date(order.timestamp).toLocaleString("id-ID")}</p>
       </div>
