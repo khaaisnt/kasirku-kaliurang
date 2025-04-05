@@ -40,7 +40,7 @@ import { MenuCard } from "@/components/menu-card";
 import type { OrderItem, Order, MenuItem } from "@/types";
 import { menuItems } from "@/data/menu-items";
 import { ReceiptView } from "@/components/receipt-view";
-import { DatePickerWithRange } from "./date-range-picker";
+import { DatePickerWithRange } from "@/components/date-range-picker";
 import type { DateRange } from "react-day-picker";
 import { format, isWithinInterval, parseISO } from "date-fns";
 import { id } from "date-fns/locale";
@@ -282,23 +282,27 @@ Tunai           Rp${formatRupiah(order.total)}
 --------------------------------
 Terimakasih - Selamat Menikmati
 ${new Date().toLocaleString("id-ID")}
+
+
+
+\n\n\n\n\n\n\n\n
 `;
 
     return receipt;
   };
 
   return (
-    <div className="container py-6 px-4 sm:px-6">
-      <header className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
+    <div className="container py-6">
+      <header className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <ShoppingBag className="h-8 w-8 text-primary" />
-          <h1 className="text-2xl sm:text-3xl font-bold text-primary">
+          <h1 className="text-3xl font-bold text-primary">
             Gado-Gado Kaliurang
           </h1>
         </div>
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant="outline" className="gap-2 w-full sm:w-auto">
+            <Button variant="outline" className="gap-2">
               <History className="h-4 w-4" />
               Riwayat Pesanan
             </Button>
@@ -495,28 +499,28 @@ ${new Date().toLocaleString("id-ID")}
         </Dialog>
       </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Menu Section */}
-        <div className="lg:col-span-2 order-2 lg:order-1">
+        <div className="lg:col-span-2">
           <Card className="bg-white/80 backdrop-blur-sm border-primary/20">
-            <CardContent className="p-4 sm:p-6">
+            <CardContent className="p-6">
               <Tabs defaultValue="makanan">
-                <TabsList className="mb-6 bg-accent w-full">
+                <TabsList className="mb-6 bg-accent">
                   <TabsTrigger
                     value="makanan"
-                    className="flex-1 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                    className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
                   >
                     Makanan
                   </TabsTrigger>
                   <TabsTrigger
                     value="minuman"
-                    className="flex-1 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                    className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
                   >
                     Minuman
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent value="makanan" className="mt-0">
-                  <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     {menuItems
                       .filter((item) => item.category === "makanan")
                       .map((item) => (
@@ -529,7 +533,7 @@ ${new Date().toLocaleString("id-ID")}
                   </div>
                 </TabsContent>
                 <TabsContent value="minuman" className="mt-0">
-                  <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     {menuItems
                       .filter((item) => item.category === "minuman")
                       .map((item) => (
@@ -547,9 +551,9 @@ ${new Date().toLocaleString("id-ID")}
         </div>
 
         {/* Order Section */}
-        <div className="order-1 lg:order-2">
+        <div>
           <Card className="bg-white/80 backdrop-blur-sm border-primary/20">
-            <CardContent className="p-4 sm:p-6">
+            <CardContent className="p-6">
               <h2 className="text-xl font-bold mb-4 text-primary">
                 Pesanan Saat Ini
               </h2>
@@ -569,14 +573,14 @@ ${new Date().toLocaleString("id-ID")}
                 />
               </div>
 
-              <div className="space-y-3 max-h-[250px] sm:max-h-[400px] overflow-y-auto mb-4 pr-1">
+              <div className="space-y-4 max-h-[400px] overflow-y-auto mb-4">
                 {currentOrder.length > 0 ? (
                   currentOrder.map((orderItem) => (
                     <div
                       key={orderItem.item.id}
-                      className="flex flex-wrap sm:flex-nowrap items-center justify-between p-2 sm:p-3 bg-accent rounded-md"
+                      className="flex items-center justify-between p-3 bg-accent rounded-md"
                     >
-                      <div className="w-full sm:w-auto mb-2 sm:mb-0">
+                      <div>
                         <h3 className="font-medium">{orderItem.item.name}</h3>
                         <p className="text-sm text-primary">
                           Rp{formatRupiah(orderItem.item.price)}
@@ -632,7 +636,7 @@ ${new Date().toLocaleString("id-ID")}
                     onClick={saveOrder}
                     disabled={currentOrder.length === 0}
                   >
-                    <Save className="h-4 w-4 hidden sm:inline" />
+                    <Save className="h-4 w-4" />
                     Simpan Pesanan
                   </Button>
                 </div>

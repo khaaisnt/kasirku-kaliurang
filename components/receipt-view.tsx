@@ -19,7 +19,8 @@ export function ReceiptView({ order }: ReceiptViewProps) {
         <p>POS: POS 1</p>
       </div>
 
-      <div className="border-t border-dashed border-gray-300 my-2 py-2">
+      <div className="border-t border-b border-dashed border-gray-300 my-2 py-2">
+        <p>Makan di tempat</p>
       </div>
 
       <div className="space-y-2 mb-4">
@@ -57,9 +58,10 @@ export function ReceiptView({ order }: ReceiptViewProps) {
         </div>
       </div>
 
-      <div className="border-t border-dashed border-gray-300 mt-2 pb-14 pt-2 text-center">
+      <div className="border-t border-dashed border-gray-300 mt-2 pt-2 text-center">
         <p>Terimakasih - Selamat Menikmati</p>
         <p>{new Date(order.timestamp).toLocaleString("id-ID")}</p>
+        <div className="h-16"></div> {/* Extra space to simulate the print margin */}
       </div>
     </div>
   )
