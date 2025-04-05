@@ -292,17 +292,17 @@ ${new Date().toLocaleString("id-ID")}
   };
 
   return (
-    <div className="container py-6">
-      <header className="flex items-center justify-between mb-6">
+    <div className="container px-4 sm:px-6 py-6">
+      <header className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
-          <ShoppingBag className="h-8 w-8 text-primary" />
-          <h1 className="text-3xl font-bold text-primary">
+          <ShoppingBag className="h-6 sm:h-8 w-6 sm:w-8 text-primary" />
+          <h1 className="text-2xl sm:text-3xl font-bold text-primary">
             Gado-Gado Kaliurang
           </h1>
         </div>
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant="outline" className="gap-2">
+            <Button variant="outline" className="gap-2 w-full sm:w-auto">
               <History className="h-4 w-4" />
               Riwayat Pesanan
             </Button>
@@ -499,61 +499,11 @@ ${new Date().toLocaleString("id-ID")}
         </Dialog>
       </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Menu Section */}
-        <div className="lg:col-span-2">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        {/* Order Section - Moved to top on mobile */}
+        <div className="order-1 lg:order-2">
           <Card className="bg-white/80 backdrop-blur-sm border-primary/20">
-            <CardContent className="p-6">
-              <Tabs defaultValue="makanan">
-                <TabsList className="mb-6 bg-accent">
-                  <TabsTrigger
-                    value="makanan"
-                    className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
-                  >
-                    Makanan
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="minuman"
-                    className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
-                  >
-                    Minuman
-                  </TabsTrigger>
-                </TabsList>
-                <TabsContent value="makanan" className="mt-0">
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    {menuItems
-                      .filter((item) => item.category === "makanan")
-                      .map((item) => (
-                        <MenuCard
-                          key={item.id}
-                          item={item}
-                          onClick={() => addToOrder(item)}
-                        />
-                      ))}
-                  </div>
-                </TabsContent>
-                <TabsContent value="minuman" className="mt-0">
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    {menuItems
-                      .filter((item) => item.category === "minuman")
-                      .map((item) => (
-                        <MenuCard
-                          key={item.id}
-                          item={item}
-                          onClick={() => addToOrder(item)}
-                        />
-                      ))}
-                  </div>
-                </TabsContent>
-              </Tabs>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Order Section */}
-        <div>
-          <Card className="bg-white/80 backdrop-blur-sm border-primary/20">
-            <CardContent className="p-6">
+            <CardContent className="p-4 sm:p-6">
               <h2 className="text-xl font-bold mb-4 text-primary">
                 Pesanan Saat Ini
               </h2>
@@ -570,23 +520,24 @@ ${new Date().toLocaleString("id-ID")}
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   className="resize-none"
+                  rows={3}
                 />
               </div>
 
-              <div className="space-y-4 max-h-[400px] overflow-y-auto mb-4">
+              <div className="space-y-3 max-h-[200px] sm:max-h-[400px] overflow-y-auto mb-4 pr-1">
                 {currentOrder.length > 0 ? (
                   currentOrder.map((orderItem) => (
                     <div
                       key={orderItem.item.id}
-                      className="flex items-center justify-between p-3 bg-accent rounded-md"
+                      className="flex flex-wrap sm:flex-nowrap items-center justify-between p-2 sm:p-3 bg-accent rounded-md"
                     >
-                      <div>
+                      <div className="w-full sm:w-auto mb-2 sm:mb-0">
                         <h3 className="font-medium">{orderItem.item.name}</h3>
                         <p className="text-sm text-primary">
                           Rp{formatRupiah(orderItem.item.price)}
                         </p>
                       </div>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
                         <Button
                           variant="outline"
                           size="icon"
@@ -618,7 +569,7 @@ ${new Date().toLocaleString("id-ID")}
                     </div>
                   ))
                 ) : (
-                  <div className="text-center py-8 text-muted-foreground">
+                  <div className="text-center py-4 sm:py-8 text-muted-foreground">
                     Belum ada item dalam pesanan
                   </div>
                 )}
@@ -636,7 +587,7 @@ ${new Date().toLocaleString("id-ID")}
                     onClick={saveOrder}
                     disabled={currentOrder.length === 0}
                   >
-                    <Save className="h-4 w-4" />
+                    <Save className="h-4 w-4 hidden xs:inline" />
                     Simpan Pesanan
                   </Button>
                 </div>
@@ -644,11 +595,61 @@ ${new Date().toLocaleString("id-ID")}
             </CardContent>
           </Card>
         </div>
+
+        {/* Menu Section - Moved below order on mobile */}
+        <div className="lg:col-span-2 order-2 lg:order-1">
+          <Card className="bg-white/80 backdrop-blur-sm border-primary/20">
+            <CardContent className="p-4 sm:p-6">
+              <Tabs defaultValue="makanan">
+                <TabsList className="mb-4 sm:mb-6 bg-accent w-full">
+                  <TabsTrigger
+                    value="makanan"
+                    className="flex-1 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                  >
+                    Makanan
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="minuman"
+                    className="flex-1 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                  >
+                    Minuman
+                  </TabsTrigger>
+                </TabsList>
+                <TabsContent value="makanan" className="mt-0">
+                  <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+                    {menuItems
+                      .filter((item) => item.category === "makanan")
+                      .map((item) => (
+                        <MenuCard
+                          key={item.id}
+                          item={item}
+                          onClick={() => addToOrder(item)}
+                        />
+                      ))}
+                  </div>
+                </TabsContent>
+                <TabsContent value="minuman" className="mt-0">
+                  <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+                    {menuItems
+                      .filter((item) => item.category === "minuman")
+                      .map((item) => (
+                        <MenuCard
+                          key={item.id}
+                          item={item}
+                          onClick={() => addToOrder(item)}
+                        />
+                      ))}
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </CardContent>
+          </Card>
+        </div>
       </div>
 
       {/* Receipt Dialog */}
       <Dialog open={isReceiptOpen} onOpenChange={setIsReceiptOpen}>
-        <DialogContent className="max-w-md">
+        <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Struk Pesanan</DialogTitle>
           </DialogHeader>
@@ -658,7 +659,7 @@ ${new Date().toLocaleString("id-ID")}
           <DialogFooter>
             <Button
               variant="outline"
-              className="gap-2"
+              className="gap-2 w-full sm:w-auto"
               onClick={() => currentReceipt && printReceipt(currentReceipt)}
             >
               <Printer className="h-4 w-4" />
